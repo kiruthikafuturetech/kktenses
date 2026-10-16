@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIME TRAVELERS – Tense Daily Quest</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Fredoka & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Custom bright educational theme stylesheet */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #FFFFFF;
+      background-image: 
+        radial-gradient(#4FC3F7 0.8px, transparent 0.8px), 
+        radial-gradient(#F8BBD0 0.8px, #FFFFFF 0.8px);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+      min-height: 100vh;
+      color: #1E293B;
+    }
+
+    .font-heading {
+      font-family: 'Fredoka', cursive, sans-serif;
+    }
+
+    /* Floating & pop animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(1deg); }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(79, 195, 247, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(79, 195, 247, 0); }
+    }
+
+    .animate-float {
+      animation: float 3.5s ease-in-out infinite;
+    }
+
+    .animate-pop {
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .animate-pulse-glow {
+      animation: pulseGlow 2s infinite;
+    }
+
+    /* Custom bright button styles according to requirements */
+    .btn-sky {
+      background-color: #4FC3F7;
+      color: #FFFFFF;
+      box-shadow: 0 4px 0 #0288D1;
+    }
+    .btn-sky:hover { background-color: #29B6F6; }
+    .btn-sky:active { transform: translateY(2px); box-shadow: 0 2px 0 #0288D1; }
+
+    .btn-yellow {
+      background-color: #FFD54F;
+      color: #5D4037;
+      box-shadow: 0 4px 0 #F57F17;
+    }
+    .btn-yellow:hover { background-color: #FFCA28; }
+    .btn-yellow:active { transform: translateY(2px); box-shadow: 0 2px 0 #F57F17; }
+
+    .btn-coral {
+      background-color: #FF8A65;
+      color: #FFFFFF;
+      box-shadow: 0 4px 0 #E65100;
+    }
+    .btn-coral:hover { background-color: #FF7043; }
+    .btn-coral:active { transform: translateY(2px); box-shadow: 0 2px 0 #E65100; }
+
+    .btn-green {
+      background-color: #66BB6A;
+      color: #FFFFFF;
+      box-shadow: 0 4px 0 #2E7D32;
+    }
+    .btn-green:hover { background-color: #4CAF50; }
+    .btn-green:active { transform: translateY(2px); box-shadow: 0 2px 0 #2E7D32; }
+
+    .btn-pink {
+      background-color: #F8BBD0;
+      color: #880E4F;
+      box-shadow: 0 4px 0 #C2185B;
+    }
+    .btn-pink:hover { background-color: #F48FB1; }
+    .btn-pink:active { transform: translateY(2px); box-shadow: 0 2px 0 #C2185B; }
+
+    .card-light-blue {
+      background-color: #E1F5FE;
+      border: 2px solid #B3E5FC;
+    }
+
+    .option-card {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .option-card:hover {
+      transform: translateY(-2px);
+      border-color: #4FC3F7;
+      background-color: #F0F4FE;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen p-3 md:p-6 justify-between items-center select-none">
+
+  <!-- Top Navigation / Header -->
+  <header class="w-full max-w-3xl bg-white rounded-2xl p-4 shadow-sm border-2 border-sky-100 flex flex-wrap justify-between items-center gap-3 mb-4">
+    <div class="flex items-center gap-3">
+      <div class="bg-amber-100 p-2.5 rounded-2xl text-3xl animate-float">⏰</div>
+      <div>
+        <h1 class="font-heading text-xl md:text-2xl font-bold text-sky-500 leading-tight">TIME TRAVELERS</h1>
+        <p class="text-xs md:text-sm font-medium text-slate-500">Tense Daily Quest • Grade 7 English</p>
+      </div>
+    </div>
+
+    <!-- Star Counter Display (Max 6 Stars) -->
+    <div class="flex items-center bg-amber-50 border-2 border-amber-200 px-4 py-2 rounded-xl shadow-inner">
+      <span class="text-2xl mr-2">⭐</span>
+      <span id="star-count" class="font-heading font-bold text-xl text-amber-600">0 / 6</span>
+      <span class="text-xs font-semibold text-amber-700 ml-1.5">Stars</span>
+    </div>
+  </header>
+
+  <!-- Main Interactive Quest Card -->
+  <main class="w-full max-w-3xl flex-1 flex flex-col justify-center">
+
+    <!-- Day Navigation Tabs -->
+    <div class="grid grid-cols-3 gap-2 mb-4">
+      <button id="day-tab-1" onclick="switchDay(1)" class="py-2.5 px-2 md:px-3 rounded-xl font-heading font-semibold text-xs md:text-base flex items-center justify-center gap-1.5 border-2 transition-all btn-sky">
+        <span>🌱</span> Day 1 <span class="hidden sm:inline">(Present)</span>
+      </button>
+      <button id="day-tab-2" onclick="switchDay(2)" class="py-2.5 px-2 md:px-3 rounded-xl font-heading font-semibold text-xs md:text-base flex items-center justify-center gap-1.5 border-2 transition-all bg-white border-slate-200 text-slate-400 opacity-60 cursor-not-allowed" disabled>
+        <span>🍂</span> Day 2 <span class="hidden sm:inline">(Past)</span>
+      </button>
+      <button id="day-tab-3" onclick="switchDay(3)" class="py-2.5 px-2 md:px-3 rounded-xl font-heading font-semibold text-xs md:text-base flex items-center justify-center gap-1.5 border-2 transition-all bg-white border-slate-200 text-slate-400 opacity-60 cursor-not-allowed" disabled>
+        <span>🚀</span> Day 3 <span class="hidden sm:inline">(Future)</span>
+      </button>
+    </div>
+
+    <!-- Main Content Card Window -->
+    <div class="bg-white rounded-3xl p-5 md:p-8 shadow-md border-2 border-sky-100 relative min-h-[440px] flex flex-col justify-between overflow-hidden">
+      
+      <!-- Quest Header Banner -->
+      <div id="quest-header" class="mb-4">
+        <!-- Dynamically populated by JS -->
+      </div>
+
+      <!-- Quest Interaction Area -->
+      <div id="quest-body" class="flex-1 flex flex-col justify-center my-2 animate-pop">
+        <!-- Dynamically populated by JS -->
+      </div>
+
+      <!-- Feedback Toast Box -->
+      <div id="feedback-box" class="hidden mt-4 p-4 rounded-2xl border-2 text-center text-base md:text-lg font-medium transition-all">
+        <!-- Dynamically populated feedback -->
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Confetti Canvas overlay for celebratory animations -->
+  <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+  <!-- Footer -->
+  <footer class="w-full max-w-3xl text-center text-xs text-slate-500 mt-6 py-2">
+    💡 Time Travelers • Grade 7 English Learning Tool
+  </footer>
+
+  <script>
+    // Global Application State Object
+    const state = {
+      currentDay: 1,
+      currentMission: 1,
+      starsEarned: 0,
+      unlockedDays: { 1: true, 2: false, 3: false },
+      completedMissions: {
+        '1-1': false,
+        '1-2': false,
+        '2-1': false,
+        '2-2': false,
+        '3-1': false,
+        '3-2': false
+      },
+      // Indices for practice missions
+      day1PracticeIndex: 0,
+      day2PracticeIndex: 0,
+      day3PracticeIndex: 0,
+      reviewIndex: 0
+    };
+
+    // Web Audio Synthesizer for chimes and sounds without external dependencies
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'correct') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+        osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+        osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+        gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } else if (type === 'tryagain') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(240, audioCtx.currentTime + 0.2);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.25);
+      } else if (type === 'fanfare') {
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const noteOsc = audioCtx.createOscillator();
+          const noteGain = audioCtx.createGain();
+          noteOsc.type = 'sine';
+          noteOsc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.1);
+          noteGain.gain.setValueAtTime(0.25, audioCtx.currentTime + idx * 0.1);
+          noteGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + idx * 0.1 + 0.3);
+          noteOsc.connect(noteGain);
+          noteGain.connect(audioCtx.destination);
+          noteOsc.start(audioCtx.currentTime + idx * 0.1);
+          noteOsc.stop(audioCtx.currentTime + idx * 0.1 + 0.3);
+        });
+      }
+    }
+
+    // Star update helper
+    function updateStars() {
+      document.getElementById('star-count').innerText = `${state.starsEarned} / 6`;
+    }
+
+    // Award star for mission completion
+    function awardStar(key) {
+      if (!state.completedMissions[key]) {
+        state.completedMissions[key] = true;
+        state.starsEarned += 1;
+        updateStars();
+      }
+    }
+
+    // Feedback Toast Display
+    function showFeedback(type, message, hint = "") {
+      const fbBox = document.getElementById('feedback-box');
+      fbBox.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300', 'text-emerald-800', 'bg-amber-50', 'border-amber-300', 'text-amber-800');
+      
+      if (type === 'success') {
+        playSound('correct');
+        fbBox.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-800');
+        fbBox.innerHTML = `<div>🎉 <strong>Correct!</strong> ${message || 'Well done!'}</div>`;
+      } else if (type === 'tryagain') {
+        playSound('tryagain');
+        fbBox.classList.add('bg-amber-50', 'border-amber-300', 'text-amber-800');
+        fbBox.innerHTML = `<div>💡 <strong>Almost! Try again.</strong> ${hint}</div>`;
+      }
+    }
+
+    function hideFeedback() {
+      const fbBox = document.getElementById('feedback-box');
+      fbBox.classList.add('hidden');
+    }
+
+    // Navigation Tab Handler
+    function switchDay(dayNum) {
+      if (!state.unlockedDays[dayNum]) return;
+      state.currentDay = dayNum;
+      state.currentMission = 1;
+      hideFeedback();
+      updateDayTabs();
+      renderCurrentQuest();
+    }
+
+    function updateDayTabs() {
+      [1, 2, 3].forEach(d => {
+        const btn = document.getElementById(`day-tab-${d}`);
+        if (d === state.currentDay) {
+          btn.className = "py-2.5 px-2 md:px-3 rounded-xl font-heading font-semibold text-xs md:text-base flex items-center justify-center gap-1.5 border-2 transition-all btn-sky shadow-md scale-105";
+          btn.disabled = false;
+        } else if (state.unlockedDays[d]) {
+          btn.className = "py-2.5 px-2 md:px-3 rounded-xl font-heading font-semibold text-xs md:text-base flex items-center justify-center gap-1.5 border-2 transition-all bg-sky-50 border-sky-200 text-sky-700 hover:bg-sky-100 cursor-pointer";
+          btn.disabled = false;
+        } else {
+          btn.className = "py-2.5 px-2 md:px-3 rounded-xl font-heading font-semibold text-xs md:text-base flex items-center justify-center gap-1.5 border-2 transition-all bg-slate-50 border-slate-200 text-slate-400 opacity-60 cursor-not-allowed";
+          btn.disabled = true;
+        }
+      });
+    }
+
+    /* ----------------------------------------------------
+       DAY 1 — PRESENT TENSE
+    ---------------------------------------------------- */
+    // Day 1 Mission 1
+    function renderDay1Mission1(header, body) {
+      header.innerHTML = `
+        <div class="flex items-center justify-between border-b pb-3 border-sky-100">
+          <span class="bg-sky-100 text-sky-800 text-xs md:text-sm font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+            🌱 DAY 1 — PRESENT TENSE WORLD
+          </span>
+          <span class="text-xs md:text-sm font-bold text-slate-400">Mission 1 of 2</span>
+        </div>
+      `;
+
+      body.innerHTML = `
+        <div class="space-y-4">
+          <!-- Lesson Card -->
+          <div class="card-light-blue rounded-2xl p-4 md:p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🌱</span>
+              <h3 class="font-heading text-lg font-bold text-sky-800">What is Present Tense?</h3>
+            </div>
+            <p class="text-slate-700 text-sm md:text-base mb-3 leading-relaxed">
+              <strong>Present Tense</strong> describes actions that happen <strong>now</strong> or <strong>regularly</strong>.
+            </p>
+            <div class="bg-white rounded-xl p-3 border border-sky-200 flex items-start gap-3">
+              <span class="text-2xl">🏫</span>
+              <div class="text-xs md:text-sm text-slate-600">
+                <p class="font-bold text-sky-900 text-base">“Riya goes to school every day.”</p>
+                <p class="mt-0.5">This describes an action that happens regularly!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question -->
+          <p class="font-heading text-base md:text-lg text-slate-800 font-bold">
+            Fill in the blank with the correct Present Tense verb:
+          </p>
+          <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 font-heading text-lg md:text-xl font-bold text-slate-800 text-center">
+            Riya <span class="text-sky-600 underline">______</span> to school every day.
+          </div>
+
+          <!-- Choices -->
+          <div class="grid grid-cols-2 gap-3">
+            <button onclick="checkDay1M1('A')" class="option-card p-3 md:p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              A. go
+            </button>
+            <button onclick="checkDay1M1('B')" class="option-card p-3 md:p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              B. goes
+            </button>
+            <button onclick="checkDay1M1('C')" class="option-card p-3 md:p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              C. went
+            </button>
+            <button onclick="checkDay1M1('D')" class="option-card p-3 md:p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              D. will go
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function checkDay1M1(choice) {
+      if (choice === 'B') {
+        awardStar('1-1');
+        showFeedback('success', 'Well done! "goes" is the correct present tense verb for Riya.');
+        setTimeout(() => {
+          hideFeedback();
+          state.currentMission = 2;
+          renderCurrentQuest();
+        }, 1300);
+      } else {
+        showFeedback('tryagain', '', 'Think about an action that happens regularly in the present!');
+      }
+    }
+
+    // Day 1 Mission 2 Practice Questions
+    const day1PracticeQuestions = [
+      {
+        question: "I <span class='text-sky-600 underline'>______</span> milk every morning.",
+        options: ["A. drink", "B. drank", "C. will drink"],
+        correct: "A",
+        hint: "'Every morning' shows a regular present habit!"
+      },
+      {
+        question: "The sun <span class='text-sky-600 underline'>______</span> in the east.",
+        options: ["A. rose", "B. rises", "C. will rise"],
+        correct: "B",
+        hint: "This is a general daily truth, so use present tense!"
+      },
+      {
+        question: "They <span class='text-sky-600 underline'>______</span> soccer every Sunday.",
+        options: ["A. played", "B. will play", "C. play"],
+        correct: "C",
+        hint: "'Every Sunday' tells us it's a regular present action."
+      }
+    ];
+
+    function renderDay1Mission2(header, body) {
+      header.innerHTML = `
+        <div class="flex items-center justify-between border-b pb-3 border-sky-100">
+          <span class="bg-sky-100 text-sky-800 text-xs md:text-sm font-semibold px-3 py-1 rounded-full">
+            🌱 DAY 1 — PRESENT TENSE WORLD
+          </span>
+          <span class="text-xs md:text-sm font-bold text-slate-400">Mission 2 of 2 (Q${state.day1PracticeIndex + 1}/3)</span>
+        </div>
+      `;
+
+      const q = day1PracticeQuestions[state.day1PracticeIndex];
+
+      body.innerHTML = `
+        <div class="space-y-5 py-2">
+          <div class="card-light-blue rounded-2xl p-5 text-center">
+            <span class="text-3xl block mb-2">🥛</span>
+            <p class="font-heading text-lg md:text-xl font-bold text-sky-900">${q.question}</p>
+          </div>
+
+          <p class="font-heading text-base font-bold text-slate-700 text-center">Choose the correct Present Tense option:</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            ${q.options.map((opt, idx) => {
+              const letter = opt.charAt(0);
+              return `
+                <button onclick="checkDay1M2('${letter}')" class="option-card p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-sky-300 font-heading font-bold text-slate-700 text-base md:text-lg transition-all text-center">
+                  ${opt}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function checkDay1M2(choice) {
+      const q = day1PracticeQuestions[state.day1PracticeIndex];
+      if (choice === q.correct) {
+        showFeedback('success', 'Great job!');
+        setTimeout(() => {
+          hideFeedback();
+          state.day1PracticeIndex++;
+          if (state.day1PracticeIndex >= day1PracticeQuestions.length) {
+            awardStar('1-2');
+            state.unlockedDays[2] = true;
+            renderDayComplete(1, "🌟 Day 1 Complete!", "You mastered the Present Tense!", 2);
+          } else {
+            renderCurrentQuest();
+          }
+        }, 1200);
+      } else {
+        showFeedback('tryagain', '', q.hint);
+      }
+    }
+
+    /* ----------------------------------------------------
+       DAY 2 — PAST TENSE
+    ---------------------------------------------------- */
+    function renderDay2Mission1(header, body) {
+      header.innerHTML = `
+        <div class="flex items-center justify-between border-b pb-3 border-amber-100">
+          <span class="bg-amber-100 text-amber-800 text-xs md:text-sm font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+            🍂 DAY 2 — PAST TENSE WORLD
+          </span>
+          <span class="text-xs md:text-sm font-bold text-slate-400">Mission 1 of 2</span>
+        </div>
+      `;
+
+      body.innerHTML = `
+        <div class="space-y-4">
+          <!-- Lesson Card -->
+          <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 md:p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🍂</span>
+              <h3 class="font-heading text-lg font-bold text-amber-900">What is Past Tense?</h3>
+            </div>
+            <p class="text-slate-700 text-sm md:text-base mb-3 leading-relaxed">
+              <strong>Past Tense</strong> describes actions that <strong>already happened</strong>.
+            </p>
+            <div class="bg-white rounded-xl p-3 border border-amber-200 flex items-start gap-3">
+              <span class="text-2xl">👵</span>
+              <div class="text-xs md:text-sm text-slate-600">
+                <p class="font-bold text-amber-900 text-base">“Arun visited his grandmother yesterday.”</p>
+                <p class="mt-0.5">This action has already taken place in the past!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question -->
+          <p class="font-heading text-base md:text-lg text-slate-800 font-bold">
+            Fill in the blank with the correct Past Tense verb:
+          </p>
+          <div class="p-3 bg-amber-100/60 rounded-xl border border-amber-300 font-heading text-lg md:text-xl font-bold text-slate-800 text-center">
+            Yesterday, Arun <span class="text-amber-700 underline">______</span> a book.
+          </div>
+
+          <!-- Choices -->
+          <div class="grid grid-cols-3 gap-3">
+            <button onclick="checkDay2M1('A')" class="option-card p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              A. reads
+            </button>
+            <button onclick="checkDay2M1('B')" class="option-card p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              B. read
+            </button>
+            <button onclick="checkDay2M1('C')" class="option-card p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              C. will read
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function checkDay2M1(choice) {
+      if (choice === 'B') {
+        awardStar('2-1');
+        showFeedback('success', '"read" (past form) is correct!');
+        setTimeout(() => {
+          hideFeedback();
+          state.currentMission = 2;
+          renderCurrentQuest();
+        }, 1300);
+      } else {
+        showFeedback('tryagain', '', 'Look for an action that already happened in the past!');
+      }
+    }
+
+    // Day 2 Mission 2 Practice Questions
+    const day2PracticeQuestions = [
+      {
+        question: "We <span class='text-amber-700 underline'>______</span> to the park yesterday.",
+        options: ["A. go", "B. went", "C. will go"],
+        correct: "B",
+        hint: "'Yesterday' signals that the trip already took place!"
+      },
+      {
+        question: "She <span class='text-amber-700 underline'>______</span> a delicious cake last night.",
+        options: ["A. baked", "B. bakes", "C. will bake"],
+        correct: "A",
+        hint: "'Last night' happened in the past."
+      },
+      {
+        question: "The students <span class='text-amber-700 underline'>______</span> hard for the test last week.",
+        options: ["A. study", "B. will study", "C. studied"],
+        correct: "C",
+        hint: "'Last week' tells us it is in the past!"
+      }
+    ];
+
+    function renderDay2Mission2(header, body) {
+      header.innerHTML = `
+        <div class="flex items-center justify-between border-b pb-3 border-amber-100">
+          <span class="bg-amber-100 text-amber-800 text-xs md:text-sm font-semibold px-3 py-1 rounded-full">
+            🍂 DAY 2 — PAST TENSE WORLD
+          </span>
+          <span class="text-xs md:text-sm font-bold text-slate-400">Mission 2 of 2 (Q${state.day2PracticeIndex + 1}/3)</span>
+        </div>
+      `;
+
+      const q = day2PracticeQuestions[state.day2PracticeIndex];
+
+      body.innerHTML = `
+        <div class="space-y-5 py-2">
+          <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-5 text-center">
+            <span class="text-3xl block mb-2">🌳</span>
+            <p class="font-heading text-lg md:text-xl font-bold text-amber-900">${q.question}</p>
+          </div>
+
+          <p class="font-heading text-base font-bold text-slate-700 text-center">Choose the correct Past Tense option:</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            ${q.options.map((opt) => {
+              const letter = opt.charAt(0);
+              return `
+                <button onclick="checkDay2M2('${letter}')" class="option-card p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-amber-300 font-heading font-bold text-slate-700 text-base md:text-lg transition-all text-center">
+                  ${opt}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function checkDay2M2(choice) {
+      const q = day2PracticeQuestions[state.day2PracticeIndex];
+      if (choice === q.correct) {
+        showFeedback('success', 'Awesome job!');
+        setTimeout(() => {
+          hideFeedback();
+          state.day2PracticeIndex++;
+          if (state.day2PracticeIndex >= day2PracticeQuestions.length) {
+            awardStar('2-2');
+            state.unlockedDays[3] = true;
+            renderDayComplete(2, "🌟 Day 2 Complete!", "You mastered the Past Tense!", 3);
+          } else {
+            renderCurrentQuest();
+          }
+        }, 1200);
+      } else {
+        showFeedback('tryagain', '', q.hint);
+      }
+    }
+
+    /* ----------------------------------------------------
+       DAY 3 — FUTURE TENSE
+    ---------------------------------------------------- */
+    function renderDay3Mission1(header, body) {
+      header.innerHTML = `
+        <div class="flex items-center justify-between border-b pb-3 border-pink-100">
+          <span class="bg-pink-100 text-pink-800 text-xs md:text-sm font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+            🚀 DAY 3 — FUTURE TENSE WORLD
+          </span>
+          <span class="text-xs md:text-sm font-bold text-slate-400">Mission 1 of 2</span>
+        </div>
+      `;
+
+      body.innerHTML = `
+        <div class="space-y-4">
+          <!-- Lesson Card -->
+          <div class="bg-pink-50 border-2 border-pink-200 rounded-2xl p-4 md:p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🚀</span>
+              <h3 class="font-heading text-lg font-bold text-pink-900">What is Future Tense?</h3>
+            </div>
+            <p class="text-slate-700 text-sm md:text-base mb-3 leading-relaxed">
+              <strong>Future Tense</strong> describes actions that <strong>will happen later</strong>.
+            </p>
+            <div class="bg-white rounded-xl p-3 border border-pink-200 flex items-start gap-3">
+              <span class="text-2xl">✈️</span>
+              <div class="text-xs md:text-sm text-slate-600">
+                <p class="font-bold text-pink-900 text-base">“I will visit Chennai tomorrow.”</p>
+                <p class="mt-0.5">This action is planned to happen in the future!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question -->
+          <p class="font-heading text-base md:text-lg text-slate-800 font-bold">
+            Fill in the blank with the correct Future Tense verb:
+          </p>
+          <div class="p-3 bg-pink-100/60 rounded-xl border border-pink-300 font-heading text-lg md:text-xl font-bold text-slate-800 text-center">
+            Tomorrow, we <span class="text-pink-700 underline">______</span> to Chennai.
+          </div>
+
+          <!-- Choices -->
+          <div class="grid grid-cols-3 gap-3">
+            <button onclick="checkDay3M1('A')" class="option-card p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              A. travelled
+            </button>
+            <button onclick="checkDay3M1('B')" class="option-card p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              B. travel
+            </button>
+            <button onclick="checkDay3M1('C')" class="option-card p-4 rounded-xl border-2 border-slate-200 bg-white font-heading font-bold text-slate-700 text-base md:text-lg">
+              C. will travel
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function checkDay3M1(choice) {
+      if (choice === 'C') {
+        awardStar('3-1');
+        showFeedback('success', '"will travel" is the correct future tense choice!');
+        setTimeout(() => {
+          hideFeedback();
+          state.currentMission = 2;
+          renderCurrentQuest();
+        }, 1300);
+      } else {
+        showFeedback('tryagain', '', 'Future tense usually includes "will" before the verb!');
+      }
+    }
+
+    // Day 3 Mission 2 Practice Questions
+    const day3PracticeQuestions = [
+      {
+        question: "I <span class='text-pink-700 underline'>______</span> my homework tomorrow.",
+        options: ["A. did", "B. do", "C. will do"],
+        correct: "C",
+        hint: "'Tomorrow' tells us the action lies in the future!"
+      },
+      {
+        question: "Next week, our family <span class='text-pink-700 underline'>______</span> to a new town.",
+        options: ["A. will move", "B. moved", "C. moves"],
+        correct: "A",
+        hint: "'Next week' is in the future, so look for 'will'!"
+      },
+      {
+        question: "She <span class='text-pink-700 underline'>______</span> us a story later tonight.",
+        options: ["A. told", "B. will tell", "C. tells"],
+        correct: "B",
+        hint: "'Later tonight' describes an upcoming action."
+      }
+    ];
+
+    function renderDay3Mission2(header, body) {
+      header.innerHTML = `
+        <div class="flex items-center justify-between border-b pb-3 border-pink-100">
+          <span class="bg-pink-100 text-pink-800 text-xs md:text-sm font-semibold px-3 py-1 rounded-full">
+            🚀 DAY 3 — FUTURE TENSE WORLD
+          </span>
+          <span class="text-xs md:text-sm font-bold text-slate-400">Mission 2 of 2 (Q${state.day3PracticeIndex + 1}/3)</span>
+        </div>
+      `;
+
+      const q = day3PracticeQuestions[state.day3PracticeIndex];
+
+      body.innerHTML = `
+        <div class="space-y-5 py-2">
+          <div class="bg-pink-50 border-2 border-pink-200 rounded-2xl p-5 text-center">
+            <span class="text-3xl block mb-2">📚</span>
+            <p class="font-heading text-lg md:text-xl font-bold text-pink-900">${q.question}</p>
+          </div>
+
+          <p class="font-heading text-base font-bold text-slate-700 text-center">Choose the correct Future Tense option:</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            ${q.options.map((opt) => {
+              const letter = opt.charAt(0);
+              return `
+                <button onclick="checkDay3M2('${letter}')" class="option-card p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-pink-300 font-heading font-bold text-slate-700 text-base md:text-lg transition-all text-center">
+                  ${opt}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function checkDay3M2(choice) {
+      const q = day3PracticeQuestions[state.day3PracticeIndex];
+      if (choice === q.correct) {
+        showFeedback('success', 'Fantastic!');
+        setTimeout(() => {
+          hideFeedback();
+          state.day3PracticeIndex++;
+          if (state.day3PracticeIndex >= day3PracticeQuestions.length) {
+            awardStar('3-2');
+            renderDayComplete(3, "🌟 Day 3 Complete!", "You mastered the Future Tense!", 4);
+          } else {
+            renderCurrentQuest();
+          }
+        }, 1200);
+      } else {
+        showFeedback('tryagain', '', q.hint);
+      }
+    }
+
+    /* Day Complete Card Transition */
+    function renderDayComplete(dayNum, title, subtitle, nextDay) {
+      playSound('fanfare');
+      triggerConfetti();
+
+      const headerEl = document.getElementById('quest-header');
+      const bodyEl = document.getElementById('quest-body');
+
+      headerEl.innerHTML = ``;
+      bodyEl.innerHTML = `
+        <div class="text-center space-y-4 py-6">
+          <div class="text-6xl animate-bounce">🌟</div>
+          <h2 class="font-heading text-2xl md:text-3xl font-bold text-amber-600">${title}</h2>
+          <p class="text-slate-600 font-medium text-base md:text-lg">${subtitle}</p>
+
+          <div class="pt-4">
+            <button onclick="continueNextDay(${nextDay})" class="btn-yellow px-8 py-3.5 rounded-2xl font-heading font-bold text-lg shadow-md">
+              ${nextDay === 4 ? "Go to Final Summary 🏆" : `Continue to Day ${nextDay} 🚀`}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function continueNextDay(nextDay) {
+      if (nextDay === 4) {
+        state.currentDay = 4;
+        renderCurrentQuest();
+      } else {
+        switchDay(nextDay);
+      }
+    }
+
+    /* ----------------------------------------------------
+       FINAL REVIEW SCREEN (Day 4 Internal State)
+    ---------------------------------------------------- */
+    const reviewQuestions = [
+      {
+        tense: "Present Tense",
+        question: "Identify the sentence in the **Present Tense**:",
+        options: [
+          "A. He eats an apple every day.",
+          "B. He ate an apple yesterday.",
+          "C. He will eat an apple tomorrow."
+        ],
+        correct: "A",
+        hint: "Present tense describes daily habits!"
+      },
+      {
+        tense: "Past Tense",
+        question: "Identify the sentence in the **Past Tense**:",
+        options: [
+          "A. We play football every day.",
+          "B. We played football yesterday.",
+          "C. We will play football tomorrow."
+        ],
+        correct: "B",
+        hint: "Past tense describes actions that already happened!"
+      },
+      {
+        tense: "Future Tense",
+        question: "Identify the sentence in the **Future Tense**:",
+        options: [
+          "A. They visit the zoo often.",
+          "B. They visited the zoo last month.",
+          "C. They will visit the zoo tomorrow."
+        ],
+        correct: "C",
+        hint: "Future tense looks ahead with 'will'!"
+      }
+    ];
+
+    function renderFinalReview(header, body) {
+      header.innerHTML = `
+        <div class="text-center py-2 border-b border-sky-100">
+          <span class="bg-amber-100 text-amber-900 text-xs md:text-sm font-bold px-4 py-1.5 rounded-full">
+            🧠 FINAL SIMPLE REVIEW (Question ${state.reviewIndex + 1}/3)
+          </span>
+        </div>
+      `;
+
+      if (state.reviewIndex === 0 && !document.getElementById('summary-shown')) {
+        body.innerHTML = `
+          <div id="summary-shown" class="space-y-4 py-2">
+            <div class="card-light-blue rounded-2xl p-4 md:p-5">
+              <h3 class="font-heading text-lg font-bold text-sky-900 mb-3 text-center">What Did We Learn?</h3>
+              <div class="space-y-2 text-sm md:text-base">
+                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3">
+                  <span class="text-xl">🟢</span>
+                  <div>
+                    <span class="font-bold text-emerald-800">Present:</span> <em>I play.</em> (It happens now or regularly)
+                  </div>
+                </div>
+                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-center gap-3">
+                  <span class="text-xl">🟠</span>
+                  <div>
+                    <span class="font-bold text-amber-800">Past:</span> <em>I played.</em> (It already happened)
+                  </div>
+                </div>
+                <div class="p-3 bg-sky-50 border border-sky-200 rounded-xl flex items-center gap-3">
+                  <span class="text-xl">🔵</span>
+                  <div>
+                    <span class="font-bold text-sky-800">Future:</span> <em>I will play.</em> (It will happen later)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="startReviewQuestions()" class="w-full btn-sky py-3.5 rounded-2xl font-heading font-bold text-lg shadow-md">
+              Start 3-Question Quick Review 🎯
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const q = reviewQuestions[state.reviewIndex];
+
+      body.innerHTML = `
+        <div class="space-y-4 py-2">
+          <div class="p-4 bg-sky-50 border-2 border-sky-200 rounded-2xl text-center">
+            <span class="bg-sky-200 text-sky-800 text-xs font-bold px-3 py-1 rounded-full uppercase">${q.tense}</span>
+            <p class="font-heading text-lg md:text-xl font-bold text-slate-800 mt-2">${q.question}</p>
+          </div>
+
+          <div class="space-y-2.5">
+            ${q.options.map(opt => {
+              const letter = opt.charAt(0);
+              return `
+                <button onclick="checkReview('${letter}')" class="w-full option-card p-3.5 rounded-xl border-2 border-slate-200 bg-white hover:border-sky-300 text-left font-medium text-slate-800 text-sm md:text-base">
+                  ${opt}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function startReviewQuestions() {
+      const summaryBox = document.getElementById('summary-shown');
+      if (summaryBox) summaryBox.remove();
+      renderFinalReview(document.getElementById('quest-header'), document.getElementById('quest-body'));
+    }
+
+    function checkReview(choice) {
+      const q = reviewQuestions[state.reviewIndex];
+      if (choice === q.correct) {
+        showFeedback('success', 'Correct!');
+        setTimeout(() => {
+          hideFeedback();
+          state.reviewIndex++;
+          if (state.reviewIndex >= reviewQuestions.length) {
+            state.currentDay = 5; // Final Certificate Screen
+            renderCurrentQuest();
+          } else {
+            renderFinalReview(document.getElementById('quest-header'), document.getElementById('quest-body'));
+          }
+        }, 1200);
+      } else {
+        showFeedback('tryagain', '', q.hint);
+      }
+    }
+
+    /* ----------------------------------------------------
+       FINAL MASTER SCREEN
+    ---------------------------------------------------- */
+    function renderFinalMasterScreen(header, body) {
+      triggerConfetti();
+      playSound('fanfare');
+
+      header.innerHTML = `
+        <div class="text-center py-2 border-b border-sky-100">
+          <span class="bg-amber-100 text-amber-900 text-sm font-bold px-4 py-1 rounded-full">🏆 TENSE MASTER BADGE UNLOCKED</span>
+        </div>
+      `;
+
+      body.innerHTML = `
+        <div class="space-y-5 py-2">
+          <!-- Master Badge Header -->
+          <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-5 text-center shadow-sm">
+            <p class="font-heading text-2xl md:text-3xl font-bold text-amber-700">🎉 TENSE MASTER! 🎉</p>
+            <p class="text-sm font-semibold text-amber-800 mt-1">You completed all 3 Daily Quests!</p>
+            <div class="text-3xl my-2">⭐⭐⭐⭐⭐⭐</div>
+          </div>
+
+          <!-- Grammar Cheat Sheet Reminder -->
+          <div class="card-light-blue rounded-xl p-3 text-center text-xs md:text-sm font-semibold text-slate-700 space-y-1">
+            <p>💡 <strong>Quick Memory Rule:</strong></p>
+            <p class="text-emerald-700">Present → I play.</p>
+            <p class="text-amber-700">Past → I played.</p>
+            <p class="text-sky-700">Future → I will play.</p>
+          </div>
+
+          <!-- Sentence Writing Prompt -->
+          <div class="bg-white border-2 border-pink-200 rounded-2xl p-4 space-y-2">
+            <p class="font-heading font-bold text-slate-800 text-sm md:text-base">
+              💭 Write one sentence about something you did yesterday:
+            </p>
+            <p class="text-xs text-slate-500">Example: <em>“I watched a movie yesterday.”</em></p>
+            <input type="text" id="past-sentence-input" placeholder="Type your past tense sentence here..." class="w-full p-3 rounded-xl border border-pink-300 focus:outline-none focus:border-pink-500 text-sm font-medium">
+            <button onclick="finishMastery()" class="w-full btn-coral py-2.5 rounded-xl font-heading font-bold text-base mt-2">
+              Submit My Sentence 🌟
+            </button>
+          </div>
+
+          <div id="final-congrats" class="hidden bg-emerald-100 border-2 border-emerald-300 text-emerald-800 p-4 rounded-xl text-center font-heading font-bold text-base md:text-lg animate-pop">
+            🌟 Great job! You are a Tense Master! 🌟
+          </div>
+        </div>
+      `;
+    }
+
+    function finishMastery() {
+      const val = document.getElementById('past-sentence-input').value.trim();
+      if (val.length < 5) {
+        showFeedback('tryagain', '', 'Please write a complete sentence about yesterday!');
+        return;
+      }
+
+      hideFeedback();
+      const congratsEl = document.getElementById('final-congrats');
+      congratsEl.classList.remove('hidden');
+      playSound('fanfare');
+      triggerConfetti();
+    }
+
+    /* Main Renderer Dispatcher */
+    function renderCurrentQuest() {
+      const headerEl = document.getElementById('quest-header');
+      const bodyEl = document.getElementById('quest-body');
+
+      if (state.currentDay === 1) {
+        if (state.currentMission === 1) renderDay1Mission1(headerEl, bodyEl);
+        else if (state.currentMission === 2) renderDay1Mission2(headerEl, bodyEl);
+      } else if (state.currentDay === 2) {
+        if (state.currentMission === 1) renderDay2Mission1(headerEl, bodyEl);
+        else if (state.currentMission === 2) renderDay2Mission2(headerEl, bodyEl);
+      } else if (state.currentDay === 3) {
+        if (state.currentMission === 1) renderDay3Mission1(headerEl, bodyEl);
+        else if (state.currentMission === 2) renderDay3Mission2(headerEl, bodyEl);
+      } else if (state.currentDay === 4) {
+        renderFinalReview(headerEl, bodyEl);
+      } else if (state.currentDay === 5) {
+        renderFinalMasterScreen(headerEl, bodyEl);
+      }
+    }
+
+    /* Celebration Confetti Engine */
+    function triggerConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#4FC3F7', '#FFD54F', '#66BB6A', '#FF8A65', '#F8BBD0'];
+
+      for (let i = 0; i < 75; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 14,
+          vy: (Math.random() - 0.5) * 14 - 3,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = false;
+
+        particles.forEach(p => {
+          if (p.alpha > 0) {
+            active = true;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.22; // gravity
+            p.alpha -= 0.015;
+
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+        });
+
+        if (active) requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+
+    window.onload = function() {
+      updateDayTabs();
+      renderCurrentQuest();
+    };
+  </script>
+</body>
+</html>
